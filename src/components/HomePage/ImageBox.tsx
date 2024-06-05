@@ -20,6 +20,7 @@ import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
 import ImageViewer from "react-simple-image-viewer";
+import Image from "next/image";
 
 interface Props {
   images: ImageType[];
@@ -62,12 +63,10 @@ export const ImageBox = ({ images, fetchAllImage, searchTerm }: Props) => {
   };
 
   const handleDownload = (url: string) => {
-    const onlyFileName = url && url.split("/")[7];
+    const downloadUrl =
+      url && url.replace("/upload/", "/upload/fl_attachment/");
 
-    console.log(onlyFileName);
-    router.push(
-      `https://res.cloudinary.com/dnhwkmskb/image/upload/fl_attachment/v1717510661/${onlyFileName}`
-    );
+    router.push(downloadUrl);
   };
 
   const openImageViewer = (index: number) => {
@@ -102,6 +101,8 @@ export const ImageBox = ({ images, fetchAllImage, searchTerm }: Props) => {
                 srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                 src={`${item.url}?w=248&fit=crop&auto=format`}
                 alt={item.title}
+                // width={248}
+                // height={200}
                 loading="lazy"
                 onClick={() => openImageViewer(index)}
               />
